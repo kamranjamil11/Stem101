@@ -17,7 +17,7 @@ public class CircuitController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ConnectionCheck());
+       // StartCoroutine(ConnectionCheck());
     }
 
     IEnumerator ConnectionCheck()
@@ -41,13 +41,16 @@ public class CircuitController : MonoBehaviour
     public void SwitchOn(bool check)
     {
         Debug.Log("Counter" + counter);
-        if (counter >= 3 && check)
+        if (counter >= 4 && check)
         {
             allConnectionEstablish = true;           
             StartCoroutine(GarageOpen());
         }
         switchOff.SetActive(true);
         switchON.SetActive(false);
+        bikeLED_light.SetActive(true);
+        bikeHeadLight.SetActive(true);
+        counter = 0;
     }
     public void SwitchOFF(bool check)
     {
@@ -56,12 +59,7 @@ public class CircuitController : MonoBehaviour
         switchON.SetActive(true);       
     }
     IEnumerator GarageOpen()
-    {
-        
-       // game_Scene.levels[GameManager.level_Num].cut_Scene1.SetActive(true);
-       // game_Scene.levels[GameManager.level_Num].cutscene_Num = 1;
-       
-       
+    {             
         switch (GameManager.level_Num)
         {
             case 1:
@@ -72,9 +70,7 @@ public class CircuitController : MonoBehaviour
                 gameObject.SetActive(false);
                 break;
             case 2:
-                StartCoroutine(Level3Circuit());
-                bikeLED_light.gameObject.SetActive(true);
-                counter = 0;
+                StartCoroutine(Level3Circuit());              
                 //target.SetActive(false);
                 break;
         }
@@ -83,7 +79,7 @@ public class CircuitController : MonoBehaviour
     }
     IEnumerator Level3Circuit()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         game_Scene.levels[GameManager.level_Num].circuit1.SetActive(false);
         game_Scene.levels[GameManager.level_Num].circuit2.SetActive(true);
         //gameObject.SetActive(false);
