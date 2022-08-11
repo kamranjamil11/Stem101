@@ -24,7 +24,7 @@ public class ItemSot : MonoBehaviour,IDropHandler
                 connected = true;
                 GetComponent<RectTransform>().GetComponent<Image>().DOFade(1, 0.1f);
                 CircuitController.counter++;
-                Debug.Log("CircuitController.counter:" + CircuitController.counter);
+               // Debug.Log("CircuitController.counter:" + CircuitController.counter);
                
                 switch (transform.parent.gameObject.name)
                 {
@@ -80,6 +80,5 @@ public class ItemSot : MonoBehaviour,IDropHandler
     {
         yield return new WaitForSeconds(2f);
         ciruit_Controller.game_Scene.levels[GameManager.level_Num].circuit1.SetActive(true);
-    }
-    
+    }   
 }

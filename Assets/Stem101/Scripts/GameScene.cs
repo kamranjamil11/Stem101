@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameScene : MonoBehaviour
 {
@@ -12,14 +13,19 @@ public class GameScene : MonoBehaviour
     public GameObject arraow;
     public Text startPopup_Text, infoPopup_Text;
     bool isTrue;
-    //public GameObject indicator_Obj;
     public GameObject player, complete_Popup;
     public Levels[] levels;
     public static GameScene instance;
+    public GameObject cube;
+    public GameObject[] game_Levels;
     // Start is called before the first frame update
     void Start()
     {
-        // bike_Camera.enabled=true;
+        foreach (var item in game_Levels)
+        {
+            item.SetActive(false);
+        }
+        game_Levels[GameManager.level_Num].SetActive(true);
         levels[GameManager.level_Num].Cutscene_Camera.enabled = true;
         if (levels[GameManager.level_Num].isStart_Popup)
         {
@@ -36,17 +42,19 @@ public class GameScene : MonoBehaviour
     {
         if (isTrue)
             arraow.transform.LookAt(levels[GameManager.level_Num].target_Obj.transform);
+       
     }
+    //...............................CutScene is called before the task start and after complete the task
     public void CutSceneComplete()
     {
        StartCoroutine(PopupOpen());
     }
+    //...............................CutScene popup opened
     IEnumerator PopupOpen()
     {
         yield return new WaitForSeconds(3f);
         if (levels[GameManager.level_Num].cutscene_Num != 5)
-        {
-            //if (levels[GameManager.level_Num].cutscene_Num < 5)
+        {         
             infoPopup_Text.text = levels[GameManager.level_Num].info_Text[levels[GameManager.level_Num].cutscene_Num];
             info_Popup.SetActive(true);
         }
@@ -55,6 +63,7 @@ public class GameScene : MonoBehaviour
             levels[GameManager.level_Num].eng_Connect_Popup.SetActive(true);
         }
     }
+    //...............................Accept method is called to accept the task 
     public void AcceptBtn()
     {
         switch (GameManager.level_Num)
@@ -80,8 +89,7 @@ public class GameScene : MonoBehaviour
                         info_Popup.SetActive(false);
                         levels[GameManager.level_Num].cutscene_Num = 3;
                         break;
-                    case 3:
-                        // levels[GameManager.level_Num].cut_Scene3.SetActive(false);            
+                    case 3:                              
                         levels[GameManager.level_Num].circuit2.SetActive(true);
                         info_Popup.SetActive(false);
                         levels[GameManager.level_Num].cutscene_Num = 4;
@@ -100,12 +108,9 @@ public class GameScene : MonoBehaviour
             case 1:
                 switch (levels[GameManager.level_Num].cutscene_Num)
                 {
-                    case 0:
-                       // player.SetActive(true);
+                    case 0:                      
                         info_Popup.SetActive(false);
-                        levels[GameManager.level_Num].circuit1.SetActive(true);
-                       // levels[GameManager.level_Num].target_Obj.SetActive(true);
-                       // isTrue = true;
+                        levels[GameManager.level_Num].circuit1.SetActive(true);                      
                         break;
                     case 1:
                         levels[GameManager.level_Num].circuit1.SetActive(true);
@@ -133,6 +138,7 @@ public class GameScene : MonoBehaviour
        
         print("cutscene_Num"+ levels[GameManager.level_Num].cutscene_Num);
     }
+    //...............................StartPopup method is called in the start of the game
     public void StartPopup()
     {
         switch (GameManager.level_Num)
@@ -146,22 +152,26 @@ public class GameScene : MonoBehaviour
                 levels[GameManager.level_Num].target_Obj.SetActive(true);
                 levels[GameManager.level_Num].cutscene_Num = 1;
                 break;
-            case 2:
-               // isTrue = true;
-               // player.SetActive(true);
-                levels[GameManager.level_Num].cut_Scene1.SetActive(true);
-               // levels[GameManager.level_Num].cutscene_Num = 1;
+            case 2:             
+                levels[GameManager.level_Num].cut_Scene1.SetActive(true);            
                 break;
         }
        
         start_Popup.SetActive(false);   
     }
+    //...............................PushButton method is called when the task completed
     public void PushButtonClick()
     {
         levels[GameManager.level_Num].circuit3.SetActive(false);
         levels[GameManager.level_Num].cut_Scene2.SetActive(true);
         levels[GameManager.level_Num].target_Obj1.SetActive(true);
     }
+    //...............................NextScene method is called to load the next level
+    public void NextScene()
+    {
+        GameManager.level_Num++;
+    }
+
 }
 [System.Serializable]
 public class Levels 

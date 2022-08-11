@@ -17,14 +17,12 @@ public class DragDrop : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IBeg
         //Debug.Log("On begin Drag");
         canvasGroup.alpha = 0.5f;
         canvasGroup.blocksRaycasts = false;
-
     }
     public void OnEndDrag(PointerEventData eventData)
     {
        // Debug.Log("On end Drag");
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
-
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -56,7 +54,5 @@ public class DragDrop : MonoBehaviour,IPointerDownHandler,IPointerUpHandler,IBeg
         posImage = rectTransform.position;
         //Debug.Log("PosImage:"+ posImage);
         //posImage.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-    }
-
-   
+    }  
 }
